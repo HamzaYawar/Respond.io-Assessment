@@ -1,0 +1,59 @@
+API Test Automation Suite Readme
+This suite contains a series of tests covering various scenarios for booking creation API.
+
+#Prerequisites
+To run (and generate reports) for this collection, ensure you have the following installed:
+
+1. Postman: The collection is designed to be run in Postman.
+2. Node.js and npm: Required to install and use Newman, the command-line collection runner for Postman.
+3. Newman: Once Node.js and npm are installed, install Newman globally via npm with the following command(if you dont have it already):
+
+$ npm install -g newman
+
+4. Newman-reporter-htmlextra: To generata HTML reports, Install the Newman-reporter-htmlextra using the following command:
+
+$ npm install -g newman-reporter-htmlextra
+
+#Instructions
+1. Download Collection attached with the email
+2. Import Collection:
+a. Open Postman.
+b. Click on the "Import" button in the top left corner.
+c. Select "Upload Files" and choose the downloaded collection file (.json).
+d. The collection should now be visible in your Postman workspace.
+
+#Test Cases
+The collection includes the following test cases:
+
+Create booking with deposit paid - true
+Create booking with deposit paid - false
+Create booking without additional fields
+Create booking with total price as string
+Create booking - missing first name
+Create booking - invalid first name (integer)
+Create booking - missing last name
+Create booking - invalid last name (integer)
+Create booking - missing check-in date
+Create booking - missing checkout date
+
+#Running the Tests
+1. Next the to collection on your left side panel, you will see a menu button for the collection, click on it to open the menu.
+2. Click on the "Run collection" button.
+3. Select the scenarios you wish to run(By default, all scenarios are selected)
+4. Click on run button to run the collection.
+
+
+#Generating Test Reports
+Run the collection using Newman and specify the newman-reporter-htmlextra reporter:
+1. Export the collection from postman
+2. Open terminal in your machine and navigate to directory where collection is exported
+3. Run the following command
+$ newman run "{{Your_Collection_File name.json}}" -r htmlextra
+4. After the execution completes, a report will be generated with detailed test results.
+
+#Viewing the Report
+Navigate to the generated report file (usually in the newman/ directory) and open index.html in a web browser to view the test execution summary and detailed results. 
+
+For more details, please check the follwing references
+1. https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/
+2. https://www.npmjs.com/package/newman-reporter-htmlextra

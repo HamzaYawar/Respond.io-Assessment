@@ -1,0 +1,839 @@
+{
+	"info": {
+		"_postman_id": "8e5474ad-3bf2-49c3-9704-ddc0f3417423",
+		"name": "Respond.io_Assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16094026"
+	},
+	"item": [
+		{
+			"name": "Create booking with deposit paid - true",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 111);",
+							"pm.collectionVariables.set('depositpaid', true);",
+							"pm.collectionVariables.set('checkin', '2018-01-01');",
+							"pm.collectionVariables.set('checkout', '2019-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returned booking matches the sent data\", function () {",
+							"    if (!pm.response.json() || !pm.response.json().booking) {",
+							"        console.error(\"Response doesn't have the expected structure\");",
+							"        return;",
+							"    }",
+							"",
+							"    const requestBody = JSON.parse(pm.request.body.raw);",
+							"    const responseData = pm.response.json().booking;",
+							"",
+							"    pm.expect(responseData.firstname).to.equal(requestBody.firstname);",
+							"    pm.expect(responseData.lastname).to.equal(requestBody.lastname);",
+							"    pm.expect(responseData.totalprice).to.equal(requestBody.totalprice);",
+							"    pm.expect(responseData.depositpaid).to.equal(requestBody.depositpaid);",
+							"    pm.expect(responseData.bookingdates.checkin).to.equal(requestBody.bookingdates.checkin);",
+							"    pm.expect(responseData.bookingdates.checkout).to.equal(requestBody.bookingdates.checkout);",
+							"    pm.expect(responseData.additionalneeds).to.equal(requestBody.additionalneeds);",
+							"});",
+							"",
+							"pm.test(\"Booking ID is returned\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.bookingid).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking with deposit paid - false",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 111);",
+							"pm.collectionVariables.set('depositpaid', false);",
+							"pm.collectionVariables.set('checkin', '2018-01-01');",
+							"pm.collectionVariables.set('checkout', '2019-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returned booking matches the sent data\", function () {",
+							"    if (!pm.response.json() || !pm.response.json().booking) {",
+							"        console.error(\"Response doesn't have the expected structure\");",
+							"        return;",
+							"    }",
+							"",
+							"    const requestBody = JSON.parse(pm.request.body.raw); // Parse the JSON request body",
+							"    const responseData = pm.response.json().booking;",
+							"",
+							"    pm.expect(responseData.firstname).to.equal(requestBody.firstname);",
+							"    pm.expect(responseData.lastname).to.equal(requestBody.lastname);",
+							"    pm.expect(responseData.totalprice).to.equal(requestBody.totalprice);",
+							"    pm.expect(responseData.depositpaid).to.equal(requestBody.depositpaid);",
+							"    pm.expect(responseData.bookingdates.checkin).to.equal(requestBody.bookingdates.checkin);",
+							"    pm.expect(responseData.bookingdates.checkout).to.equal(requestBody.bookingdates.checkout);",
+							"    pm.expect(responseData.additionalneeds).to.equal(requestBody.additionalneeds);",
+							"});",
+							"",
+							"pm.test(\"Booking ID is returned\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.bookingid).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking without additional fields",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 111);",
+							"pm.collectionVariables.set('depositpaid', false);",
+							"pm.collectionVariables.set('checkin', '2018-01-01');",
+							"pm.collectionVariables.set('checkout', '2019-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returned booking matches the sent data\", function () {",
+							"    if (!pm.response.json() || !pm.response.json().booking) {",
+							"        console.error(\"Response doesn't have the expected structure\");",
+							"        return;",
+							"    }",
+							"",
+							"    const requestBody = JSON.parse(pm.request.body.raw); // Parse the JSON request body",
+							"    const responseData = pm.response.json().booking;",
+							"",
+							"    pm.expect(responseData.firstname).to.equal(requestBody.firstname);",
+							"    pm.expect(responseData.lastname).to.equal(requestBody.lastname);",
+							"    pm.expect(responseData.totalprice).to.equal(requestBody.totalprice);",
+							"    pm.expect(responseData.depositpaid).to.equal(requestBody.depositpaid);",
+							"    pm.expect(responseData.bookingdates.checkin).to.equal(requestBody.bookingdates.checkin);",
+							"    pm.expect(responseData.bookingdates.checkout).to.equal(requestBody.bookingdates.checkout);",
+							"    pm.expect(responseData.additionalneeds).to.equal(requestBody.additionalneeds);",
+							"});",
+							"",
+							"pm.test(\"Booking ID is returned\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.bookingid).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    }\n    // \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking with total price as string",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 'invalid');",
+							"pm.collectionVariables.set('depositpaid', false);",
+							"pm.collectionVariables.set('checkin', '2018-01-01');",
+							"pm.collectionVariables.set('checkout', '2019-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returned booking matches the sent data (except totalprice)\", function () {",
+							"    if (!pm.response.json() || !pm.response.json().booking) {",
+							"        console.error(\"Response doesn't have the expected structure\");",
+							"        return;",
+							"    }",
+							"",
+							"    const requestBody = JSON.parse(pm.request.body.raw);",
+							"    const responseData = pm.response.json().booking;",
+							"",
+							"    pm.expect(responseData.firstname).to.equal(requestBody.firstname);",
+							"    pm.expect(responseData.lastname).to.equal(requestBody.lastname);",
+							"    pm.expect(responseData.depositpaid).to.equal(requestBody.depositpaid);",
+							"    pm.expect(responseData.bookingdates.checkin).to.equal(requestBody.bookingdates.checkin);",
+							"    pm.expect(responseData.bookingdates.checkout).to.equal(requestBody.bookingdates.checkout);",
+							"    pm.expect(responseData.additionalneeds).to.equal(requestBody.additionalneeds);",
+							"",
+							"    // Asserting that totalprice is null in the response",
+							"    pm.expect(responseData.totalprice).to.be.null;",
+							"});",
+							"",
+							"pm.test(\"Booking ID is returned\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.bookingid).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": \"{{totalprice}}\",\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking - missing first name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 111);",
+							"pm.collectionVariables.set('depositpaid', false);",
+							"pm.collectionVariables.set('checkin', '2018-01-01');",
+							"pm.collectionVariables.set('checkout', '2019-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    // \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking - invalid first name (integer)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 111);",
+							"pm.collectionVariables.set('depositpaid', false);",
+							"pm.collectionVariables.set('checkin', '2018-01-01');",
+							"pm.collectionVariables.set('checkout', '2019-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": {{firstname}},\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking - missing last name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 111);",
+							"pm.collectionVariables.set('depositpaid', false);",
+							"pm.collectionVariables.set('checkin', '2018-01-01');",
+							"pm.collectionVariables.set('checkout', '2019-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    // \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking - invalid last name (integer)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 111);",
+							"pm.collectionVariables.set('depositpaid', false);",
+							"pm.collectionVariables.set('checkin', '2018-01-01');",
+							"pm.collectionVariables.set('checkout', '2019-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": {{lastname}},\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking - missing checkin date",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 111);",
+							"pm.collectionVariables.set('depositpaid', false);",
+							"pm.collectionVariables.set('checkin', '2018-01-01');",
+							"pm.collectionVariables.set('checkout', '2019-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        // \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking - missing checkout date",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 111);",
+							"pm.collectionVariables.set('depositpaid', false);",
+							"pm.collectionVariables.set('checkin', '2018-01-01');",
+							"pm.collectionVariables.set('checkout', '2019-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\"\n        // \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking - checkout date earlier than checkin date",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Setting all payload parameters in collection variables",
+							"pm.collectionVariables.set('firstname', '{{$randomFirstName}}');",
+							"pm.collectionVariables.set('lastname', '{{$randomLastName}}');",
+							"pm.collectionVariables.set('totalprice', 111);",
+							"pm.collectionVariables.set('depositpaid', false);",
+							"pm.collectionVariables.set('checkin', '2019-01-01');",
+							"pm.collectionVariables.set('checkout', '2018-01-01');",
+							"pm.collectionVariables.set('additionalneeds', 'Breakfast');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\"\n        // \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "firstname",
+			"value": ""
+		},
+		{
+			"key": "lastname",
+			"value": ""
+		},
+		{
+			"key": "totalprice",
+			"value": ""
+		},
+		{
+			"key": "depositpaid",
+			"value": ""
+		},
+		{
+			"key": "checkin",
+			"value": ""
+		},
+		{
+			"key": "checkout",
+			"value": ""
+		},
+		{
+			"key": "additionalneeds",
+			"value": ""
+		},
+		{
+			"key": "requestBody",
+			"value": ""
+		}
+	]
+}
